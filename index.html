@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SchemeAI - Government Scheme Finder</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+/* NAVBAR */
+.navbar{
+    background:#172554;
+    color:white;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#60a5fa;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    font-size:15px;
+}
+
+.nav-links a:hover{
+    color:#93c5fd;
+}
+
+/* HERO */
+.hero{
+    background:linear-gradient(135deg,#172554,#2563eb);
+    color:white;
+    padding:85px 7%;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.hero h1{
+    font-size:50px;
+    line-height:1.15;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:19px;
+    line-height:1.7;
+    color:#dbeafe;
+}
+
+.hero-buttons{
+    margin-top:30px;
+}
+
+.primary-btn{
+    background:white;
+    color:#1d4ed8;
+    border:none;
+    padding:14px 25px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+}
+
+/* GENERAL */
+.container{
+    width:86%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.section{
+    padding:65px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-title h2{
+    font-size:34px;
+    color:#172554;
+}
+
+.section-title p{
+    margin-top:10px;
+    color:#64748b;
+}
+
+/* FORM */
+.form-card{
+    background:white;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.08);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#334155;
+}
+
+.form-group input,
+.form-group select{
+    padding:13px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#2563eb;
+}
+
+.voice-row{
+    display:flex;
+    gap:8px;
+}
+
+.voice-row input{
+    flex:1;
+}
+
+.voice-btn{
+    width:50px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.voice-btn:hover{
+    background:#1d4ed8;
+}
+
+.voice-status{
+    margin-top:7px;
+    font-size:13px;
+    color:#64748b;
+}
+
+.full-width{
+    grid-column:1/-1;
+}
+
+.find-btn{
+    margin-top:25px;
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.find-btn:hover{
+    background:#1d4ed8;
+}
+
+/* RESULTS */
+.results{
+    display:none;
+}
+
+.results-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.results-header h2{
+    color:#172554;
+}
+
+#resultCount{
+    color:#64748b;
+}
+
+/* BEST MATCH */
+.best-match{
+    display:none;
+    background:linear-gradient(135deg,#ecfdf5,#eff6ff);
+    border:2px solid #2563eb;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:30px;
+}
+
+.best-match h2{
+    color:#172554;
+    margin-bottom:10px;
+}
+
+.best-match h3{
+    color:#1d4ed8;
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.match-score{
+    font-size:22px;
+    font-weight:bold;
+    color:#059669;
+}
+
+.reason-list{
+    margin-top:15px;
+}
+
+.reason{
+    background:white;
+    padding:10px;
+    margin:7px 0;
+    border-radius:7px;
+}
+
+/* SCHEME CARDS */
+.scheme-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.scheme-card{
+    background:white;
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    transition:0.2s;
+}
+
+.scheme-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+
+.scheme-card.hidden{
+    display:none;
+}
+
+.scheme-tag{
+    display:inline-block;
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.scheme-card h3{
+    color:#172554;
+    margin-bottom:10px;
+    font-size:21px;
+}
+
+.scheme-card p{
+    color:#64748b;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.score{
+    margin:15px 0;
+    font-size:22px;
+    font-weight:bold;
+    color:#059669;
+}
+
+.reason-box{
+    background:#f8fafc;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.reason-box strong{
+    color:#334155;
+}
+
+.details-btn{
+    width:100%;
+    padding:11px;
+    border:none;
+    border-radius:7px;
+    background:#172554;
+    color:white;
+    cursor:pointer;
+}
+
+.details-btn:hover{
+    background:#1e40af;
+}
+
+/* HOW IT WORKS */
+.steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.step{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,0.06);
+}
+
+.step-number{
+    width:45px;
+    height:45px;
+    margin:auto;
+    background:#2563eb;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.step h3{
+    margin-bottom:8px;
+}
+
+.step p{
+    color:#64748b;
+    font-size:14px;
+    line-height:1.5;
+}
+
+/* ABOUT */
+.about-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.about-card{
+    background:white;
+    padding:28px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,0.06);
+}
+
+.about-card .icon{
+    font-size:38px;
+    margin-bottom:15px;
+}
+
+.about-card h3{
+    margin-bottom:10px;
+    color:#172554;
+}
+
+.about-card p{
+    color:#64748b;
+    line-height:1.6;
+}
+
+/* FOOTER */
+footer{
+    background:#172554;
+    color:white;
+    padding:40px 7%;
+    text-align:center;
+}
+
+footer p{
+    color:#cbd5e1;
+    margin-top:10px;
+    font-size:14px;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    z-index:500;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-content{
+    background:white;
+    width:100%;
+    max-width:650px;
+    max-height:85vh;
+    overflow:auto;
+    border-radius:15px;
+    padding:30px;
+}
+
+.close{
+    float:right;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.modal-content h2{
+    color:#172554;
+    margin-bottom:15px;
+}
+
+.modal-content h3{
+    margin-top:20px;
+    margin-bottom:8px;
+    color:#1d4ed8;
+}
+
+.modal-content p,
+.modal-content li{
+    color:#475569;
+    line-height:1.6;
+}
+
+.modal-content ul{
+    margin-left:20px;
+}
+
+.official-link{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 18px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:7px;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+    .scheme-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .steps{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:650px){
+
+    .navbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .nav-links{
+        gap:12px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .scheme-grid{
+        grid-template-columns:1fr;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+    }
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Scheme<span>AI</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#find">Find Schemes</a>
+        <a href="#how">How It Works</a>
+        <a href="#about">About</a>
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <h1>
+            Find Government Schemes Made for You
+        </h1>
+
+        <p>
+            SchemeAI helps entrepreneurs discover government
+            schemes based on their personal profile, business
+            activity, income and social category.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="primary-btn"
+                onclick="document.getElementById('find').scrollIntoView({behavior:'smooth'})">
+
+                Find My Schemes
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FIND SCHEMES FORM
+========================= -->
+
+<section class="section" id="find">
+
+<div class="container">
+
+    <div class="section-title">
+
+        <h2>
+            Tell Us About Yourself
+        </h2>
+
+        <p>
+            Enter your basic details to get personalized recommendations.
+        </p>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <div class="form-grid">
+
+
+            <!-- AGE -->
+
+            <div class="form-group">
+
+                <label for="age">
+                    Age
+                </label>
+
+                <input
+                    type="number"
+                    id="age"
+                    placeholder="Example: 25"
+                    min="18">
+
+            </div>
+
+
+            <!-- GENDER -->
+
+            <div class="form-group">
+
+                <label for="gender">
+                    Gender
+                </label>
+
+                <select id="gender">
+
+                    <option value="">
+                        Select Gender
+                    </option>
+
+                    <option value="Female">
+                        Female
+                    </option>
+
+                    <option value="Male">
+                        Male
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- STATE -->
+
+            <div class="form-group">
+
+                <label for="state">
+                    State
+                </label>
+
+                <select id="state">
+
+                    <option value="">
+                        Select State
+                    </option>
+
+                    <option value="Tamil Nadu">
+                        Tamil Nadu
+                    </option>
+
+                    <option value="Kerala">
+                        Kerala
+                    </option>
+
+                    <option value="Karnataka">
+                        Karnataka
+                    </option>
+
+                    <option value="Andhra Pradesh">
+                        Andhra Pradesh
+                    </option>
+
+                    <option value="Telangana">
+                        Telangana
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- INCOME -->
+
+            <div class="form-group">
+
+                <label for="income">
+                    Annual Family Income (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="income"
+                    placeholder="Example: 300000"
+                    min="0">
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="form-group">
+
+                <label for="category">
+                    Social Category
+                </label>
+
+                <select id="category">
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="General">
+                        General
+                    </option>
+
+                    <option value="SC">
+                        SC
+                    </option>
+
+                    <option value="ST">
+                        ST
+                    </option>
+
+                    <option value="OBC">
+                        OBC
+                    </option>
+
+                    <option value="PwD">
+                        Person with Disability
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- BUSINESS -->
+
+            <div class="form-group">
+
+                <label for="business">
+                    Business / Work Type
+                </label>
+
+                <div class="voice-row">
+
+                    <input
+                        type="text"
+                        id="business"
+                        placeholder="Example: Tailoring">
+
+                    <button
+                        type="button"
+                        class="voice-btn"
+                        onclick="startVoice()">
+
+                        🎤
+
+                    </button>
+
+                </div>
+
+                <div
+                    class="voice-status"
+                    id="voiceStatus">
+                </div>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <div class="full-width">
+
+                <button
+                    class="find-btn"
+                    onclick="findSchemes()">
+
+                    🔍 Find Suitable Government Schemes
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     RESULTS
+========================= -->
+
+<section class="section" id="resultsSection">
+
+<div class="container">
+
+
+    <!-- BEST MATCH -->
+
+    <div
+        class="best-match"
+        id="bestMatch">
+
+        <h2>
+            ⭐ Most Suitable Scheme
+        </h2>
+
+        <h3 id="bestScheme">
+        </h3>
+
+        <div
+            class="match-score"
+            id="bestScore">
+        </div>
+
+        <div class="reason-list">
+
+            <strong>
+                Why this scheme?
+            </strong>
+
+            <div id="bestReasons">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    <div
+        class="results"
+        id="results">
+
+        <div class="results-header">
+
+            <h2>
+                Recommended Schemes
+            </h2>
+
+            <span id="resultCount">
+            </span>
+
+        </div>
+
+
+        <div class="scheme-grid">
+
+
+            <!-- PMEGP -->
+
+            <div
+                class="scheme-card"
+                id="pmegpCard">
+
+                <span class="scheme-tag">
+                    Government of India
+                </span>
+
+                <h3>
+                    PMEGP
+                </h3>
+
+                <p>
+                    Prime Minister's Employment Generation Programme
+                    supports eligible individuals in establishing
+                    new micro enterprises in the non-farm sector.
+                </p>
+
+                <div
+                    class="score"
+                    id="pmegpScore">
+                    0% Match
+                </div>
+
+                <div class="reason-box">
+
+                    <strong>
+                        Match Reasons
+                    </strong>
+
+                    <div id="pmegpReasons">
+                    </div>
+
+                </div>
+
+                <button
+                    class="details-btn"
+                    onclick="showDetails('PMEGP')">
+
+                    View Scheme Details
+
+                </button>
+
+            </div>
+
+
+            <!-- MUDRA -->
+
+            <div
+                class="scheme-card"
+                id="mudraCard">
+
+                <span class="scheme-tag">
+                    Business Loan
+                </span>
+
+                <h3>
+                    PM MUDRA Yojana
+                </h3>
+
+                <p>
+                    Provides institutional collateral-free credit
+                    support to eligible micro enterprises for
+                    business activities.
+                </p>
+
+                <div
+                    class="score"
+                    id="mudraScore">
+                    0% Match
+                </div>
+
+                <div class="reason-box">
+
+                    <strong>
+                        Match Reasons
+                    </strong>
+
+                    <div id="mudraReasons">
+                    </div>
+
+                </div>
+
+                <button
+                    class="details-btn"
+                    onclick="showDetails('MUDRA')">
+
+                    View Scheme Details
+
+                </button>
+
+            </div>
+
+
+            <!-- STAND-UP INDIA -->
+
+            <div
+                class="scheme-card"
+                id="standupCard">
+
+                <span class="scheme-tag">
+                    SC / ST / Women
+                </span>
+
+                <h3>
+                    Stand-Up India
+                </h3>
+
+                <p>
+                    Supports eligible SC/ST and women entrepreneurs
+                    for greenfield enterprises through bank loans.
+                </p>
+
+                <div
+                    class="score"
+                    id="standupScore">
+                    0% Match
+                </div>
+
+                <div class="reason-box">
+
+                    <strong>
+                        Match Reasons
+                    </strong>
+
+                    <div id="standupReasons">
+                    </div>
+
+                </div>
+
+                <button
+                    class="details-btn"
+                    onclick="showDetails('Stand-Up India')">
+
+                    View Scheme Details
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section class="section" id="how">
+
+<div class="container">
+
+    <div class="section-title">
+
+        <h2>
+            How SchemeAI Works
+        </h2>
+
+        <p>
+            From your profile to relevant government schemes.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Enter Profile
+            </h3>
+
+            <p>
+                Provide age, gender, state, income,
+                category and business information.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                AI Understands
+            </h3>
+
+            <p>
+                Natural language and voice input can
+                be converted into structured profile information.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Match Schemes
+            </h3>
+
+            <p>
+                Eligibility rules are compared with
+                the user's profile.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Explain Result
+            </h3>
+
+            <p>
+                The system explains why a particular
+                scheme was recommended.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="section" id="about">
+
+<div class="container">
+
+    <div class="section-title">
+
+        <h2>
+            Why SchemeAI?
+        </h2>
+
+        <p>
+            Making government entrepreneurship support easier to discover.
+        </p>
+
+    </div>
+
+
+    <div class="about-grid">
+
+
+        <div class="about-card">
+
+            <div class="icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Assisted
+            </h3>
+
+            <p>
+                Natural language and voice input can
+                make scheme discovery easier.
+            </p>
+
+        </div>
+
+
+        <div class="about-card">
+
+            <div class="icon">
+                🎯
+            </div>
+
+            <h3>
+                Personalized
+            </h3>
+
+            <p>
+                Recommendations consider profile,
+                category and business information.
+            </p>
+
+        </div>
+
+
+        <div class="about-card">
+
+            <div class="icon">
+                🔎
+            </div>
+
+            <h3>
+                Explainable
+            </h3>
+
+            <p>
+                Users can understand the reasons behind
+                a recommendation.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h2>
+        SchemeAI
+    </h2>
+
+    <p>
+        AI-Assisted Government Scheme Discovery Platform
+    </p>
+
+    <p>
+        Prototype for Smart India Hackathon
+    </p>
+
+</footer>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="schemeModal"
+    onclick="closeModal(event)">
+
+    <div
+        class="modal-content"
+        onclick="event.stopPropagation()">
+
+        <span
+            class="close"
+            onclick="closeModal()">
+
+            &times;
+
+        </span>
+
+        <h2 id="modalTitle">
+        </h2>
+
+        <p id="modalDescription">
+        </p>
+
+        <h3>
+            Who may be eligible?
+        </h3>
+
+        <ul id="modalEligibility">
+        </ul>
+
+        <h3>
+            Key Benefit
+        </h3>
+
+        <p id="modalBenefit">
+        </p>
+
+        <h3>
+            Important Note
+        </h3>
+
+        <p>
+            SchemeAI provides a preliminary profile-match result.
+            Final eligibility, sanction and benefits must be verified
+            using the latest official scheme guidelines and the
+            concerned government or bank authority.
+        </p>
+
+        <a
+            href="#"
+            target="_blank"
+            class="official-link"
+            id="officialLink">
+
+            Open Official Source
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   VOICE INPUT
+========================================= */
+
+function startVoice(){
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+
+        document.getElementById("voiceStatus").innerText =
+            "Voice input is not supported here. Try Chrome or Edge.";
+
+        return;
+    }
+
+    const recognition =
+        new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+
+    recognition.interimResults = false;
+
+    recognition.maxAlternatives = 1;
+
+
+    document.getElementById("voiceStatus").innerText =
+        "🎤 Listening... Speak your business type.";
+
+
+    recognition.start();
+
+
+    recognition.onresult = function(event){
+
+        const transcript =
+            event.results[0][0].transcript;
+
+        document.getElementById("business").value =
+            transcript;
+
+        document.getElementById("voiceStatus").innerText =
+            "Voice captured: " + transcript;
+
+    };
+
+
+    recognition.onerror = function(){
+
+        document.getElementById("voiceStatus").innerText =
+            "Voice input failed. Please try again.";
+
+    };
+
+
+    recognition.onend = function(){
+
+        if(
+            document.getElementById("business").value === ""
+        ){
+
+            document.getElementById("voiceStatus").innerText =
+                "You can try speaking again.";
+
+        }
+
+    };
+
+}
+
+
+/* =========================================
+   FIND SCHEMES
+========================================= */
+
+function findSchemes(){
+
+    const age =
+        parseInt(document.getElementById("age").value);
+
+    const gender =
+        document.getElementById("gender").value;
+
+    const state =
+        document.getElementById("state").value;
+
+    const income =
+        parseInt(document.getElementById("income").value);
+
+    const category =
+        document.getElementById("category").value;
+
+    const business =
+        document.getElementById("business").value.trim();
+
+
+    /* VALIDATION */
+
+    if(
+        !age ||
+        !gender ||
+        !state ||
+        isNaN(income) ||
+        !category ||
+        !business
+    ){
+
+        alert(
+            "Please fill all the fields before finding schemes."
+        );
+
+        return;
+    }
+
+
+    if(age < 18){
+
+        alert(
+            "This prototype currently focuses on adult entrepreneurship schemes."
+        );
+
+        return;
+    }
+
+
+    /* SHOW RESULTS */
+
+    document.getElementById("results").style.display =
+        "block";
+
+    document.getElementById("bestMatch").style.display =
+        "block";
+
+
+    /* =================================
+       PMEGP
+    ================================= */
+
+    let pmegpScore = 55;
+
+    let pmegpReasons = [];
+
+
+    if(age >= 18){
+
+        pmegpScore += 15;
+
+        pmegpReasons.push(
+            "Age requirement is compatible with the basic scheme condition."
+        );
+
+    }
+
+
+    if(business.length >= 3){
+
+        pmegpScore += 10;
+
+        pmegpReasons.push(
+            "A business activity has been provided."
+        );
+
+    }
+
+
+    if(
+        category === "SC" ||
+        category === "ST" ||
+        category === "OBC" ||
+        category === "PwD" ||
+        gender === "Female"
+    ){
+
+        pmegpScore += 10;
+
+        pmegpReasons.push(
+            "Your profile may receive special-category consideration under applicable PMEGP guidelines."
+        );
+
+    }
+
+
+    pmegpScore =
+        Math.min(pmegpScore,95);
+
+
+    /* =================================
+       MUDRA
+    ================================= */
+
+    let mudraScore = 60;
+
+    let mudraReasons = [];
+
+
+    if(business.length >= 3){
+
+        mudraScore += 15;
+
+        mudraReasons.push(
+            "A business activity was provided."
+        );
+
+    }
+
+
+    if(income <= 1000000){
+
+        mudraScore += 10;
+
+        mudraReasons.push(
+            "The reported income fits this prototype's small-business matching logic."
+        );
+
+    }
+
+
+    const businessLower =
+        business.toLowerCase();
+
+
+    if(
+        businessLower.includes("tailor") ||
+        businessLower.includes("tailoring") ||
+        businessLower.includes("food") ||
+        businessLower.includes("retail") ||
+        businessLower.includes("handicraft") ||
+        businessLower.includes("service") ||
+        businessLower.includes("shop") ||
+        businessLower.includes("manufacturing")
+    ){
+
+        mudraScore += 10;
+
+        mudraReasons.push(
+            "The business activity appears relevant to micro-enterprise financing."
+        );
+
+    }
+
+
+    mudraScore =
+        Math.min(mudraScore,95);
+
+
+    /* =================================
+       STAND-UP INDIA
+    ================================= */
+
+    let standupScore = 40;
+
+    let standupReasons = [];
+
+
+    if(age >= 18){
+
+        standupScore += 15;
+
+        standupReasons.push(
+            "You are above the minimum age condition."
+        );
+
+    }
+
+
+    if(gender === "Female"){
+
+        standupScore += 25;
+
+        standupReasons.push(
+            "The scheme specifically supports women entrepreneurs."
+        );
+
+    }
+
+
+    if(
+        category === "SC" ||
+        category === "ST"
+    ){
+
+        standupScore += 25;
+
+        standupReasons.push(
+            "The scheme specifically supports SC/ST entrepreneurs."
+        );
+
+    }
+
+
+    if(business.length >= 3){
+
+        standupScore += 5;
+
+        standupReasons.push(
+            "A business activity was provided."
+        );
+
+    }
+
+
+    standupScore =
+        Math.min(standupScore,95);
+
+
+    /* =================================
+       CREATE SCHEME LIST
+    ================================= */
+
+    const schemes = [
+
+        {
+            name:"PMEGP",
+            score:pmegpScore,
+            reasons:pmegpReasons
+        },
+
+        {
+            name:"PM MUDRA Yojana",
+            score:mudraScore,
+            reasons:mudraReasons
+        },
+
+        {
+            name:"Stand-Up India",
+            score:standupScore,
+            reasons:standupReasons
+        }
+
+    ];
+
+
+    /* SORT */
+
+    schemes.sort(
+        (a,b) => b.score - a.score
+    );
+
+
+    /* =================================
+       UPDATE SCORES
+    ================================= */
+
+    document.getElementById("pmegpScore").innerText =
+        pmegpScore + "% Match";
+
+    document.getElementById("mudraScore").innerText =
+        mudraScore + "% Match";
+
+    document.getElementById("standupScore").innerText =
+        standupScore + "% Match";
+
+
+    /* =================================
+       UPDATE REASONS
+    ================================= */
+
+    document.getElementById("pmegpReasons").innerHTML =
+        makeReasons(pmegpReasons);
+
+    document.getElementById("mudraReasons").innerHTML =
+        makeReasons(mudraReasons);
+
+    document.getElementById("standupReasons").innerHTML =
+        makeReasons(standupReasons);
+
+
+    /* =================================
+       BEST MATCH
+    ================================= */
+
+    const best =
+        schemes[0];
+
+
+    document.getElementById("bestScheme").innerText =
+        best.name;
+
+    document.getElementById("bestScore").innerText =
+        best.score + "% Match";
+
+
+    document.getElementById("bestReasons").innerHTML =
+        makeReasons(best.reasons);
+
+
+    /* =================================
+       RESULT COUNT
+    ================================= */
+
+    document.getElementById("resultCount").innerText =
+        schemes.length + " schemes found";
+
+
+    /* =================================
+       SCROLL
+    ================================= */
+
+    document.getElementById("resultsSection")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+/* =========================================
+   REASONS HTML
+========================================= */
+
+function makeReasons(reasons){
+
+    if(reasons.length === 0){
+
+        return `
+            <div class="reason">
+                Further eligibility verification is required.
+            </div>
+        `;
+
+    }
+
+
+    return reasons
+        .map(function(reason){
+
+            return `
+                <div class="reason">
+                    ✓ ${reason}
+                </div>
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =========================================
+   SCHEME DETAILS
+========================================= */
+
+function showDetails(name){
+
+    const title =
+        document.getElementById("modalTitle");
+
+    const description =
+        document.getElementById("modalDescription");
+
+    const eligibility =
+        document.getElementById("modalEligibility");
+
+    const benefit =
+        document.getElementById("modalBenefit");
+
+    const official =
+        document.getElementById("officialLink");
+
+
+    if(name === "PMEGP"){
+
+        title.innerText =
+            "Prime Minister's Employment Generation Programme (PMEGP)";
+
+
+        description.innerText =
+            "PMEGP is a Government of India programme supporting eligible individuals in establishing new micro enterprises in the non-farm sector.";
+
+
+        eligibility.innerHTML = `
+
+            <li>Individual applicants should be above 18 years.</li>
+
+            <li>No income ceiling is specified for assistance for setting up projects.</li>
+
+            <li>For projects above specified cost thresholds, educational qualification conditions apply.</li>
+
+            <li>The assistance is intended for eligible new projects under the scheme.</li>
+
+        `;
+
+
+        benefit.innerText =
+            "Margin money subsidy support is provided through bank-financed projects, subject to scheme conditions.";
+
+
+        official.href =
+            "https://www.pmegp.msme.gov.in/";
+
+    }
+
+
+    else if(name === "MUDRA"){
+
+        title.innerText =
+            "Pradhan Mantri MUDRA Yojana (PMMY)";
+
+
+        description.innerText =
+            "PMMY provides institutional collateral-free credit to eligible micro enterprises.";
+
+
+        eligibility.innerHTML = `
+
+            <li>Supports eligible micro enterprise activities.</li>
+
+            <li>Can cover term loan and working capital requirements.</li>
+
+            <li>Includes non-agricultural activities and certain allied agricultural activities.</li>
+
+            <li>Loan products include Shishu, Kishore, Tarun and Tarun Plus, subject to applicable conditions.</li>
+
+        `;
+
+
+        benefit.innerText =
+            "Collateral-free institutional credit is a major feature of the scheme, subject to applicable terms.";
+
+
+        official.href =
+            "https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy";
+
+    }
+
+
+    else if(name === "Stand-Up India"){
+
+        title.innerText =
+            "Stand-Up India";
+
+
+        description.innerText =
+            "Stand-Up India promotes entrepreneurship among Scheduled Caste, Scheduled Tribe and women entrepreneurs.";
+
+
+        eligibility.innerHTML = `
+
+            <li>Entrepreneurs should be above 18 years.</li>
+
+            <li>Supports SC/ST and women entrepreneurs.</li>
+
+            <li>Designed for greenfield enterprises.</li>
+
+            <li>Eligible activities include manufacturing, services and trading, subject to scheme conditions.</li>
+
+        `;
+
+
+        benefit.innerText =
+            "Composite bank loans between ₹10 lakh and ₹1 crore are available under the scheme, subject to eligibility and bank requirements.";
+
+
+        official.href =
+            "https://www.financialservices.gov.in/node/3468";
+
+    }
+
+
+    document.getElementById("schemeModal")
+        .style.display = "flex";
+
+}
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+function closeModal(event){
+
+    if(
+        !event ||
+        event.target.id === "schemeModal"
+    ){
+
+        document.getElementById("schemeModal")
+            .style.display = "none";
+
+    }
+
+}
+
+
+/* =========================================
+   ESCAPE KEY
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
