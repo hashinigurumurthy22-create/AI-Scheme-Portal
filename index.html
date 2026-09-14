@@ -282,7 +282,6 @@ footer {
     </div>
 </nav>
 
-
 <!-- HOME -->
 <section class="hero" id="home">
 
@@ -308,7 +307,6 @@ footer {
     </div>
 
 </section>
-
 
 <!-- FIND SCHEMES -->
 <section id="find">
@@ -393,7 +391,6 @@ footer {
 
 </section>
 
-
 <!-- RESULTS -->
 <section id="results">
 
@@ -411,7 +408,8 @@ footer {
 
         <div class="cards">
 
-            <div class="card">
+            <!-- WOMEN SCHEME -->
+            <div class="card" id="womenCard">
 
                 <div class="match" id="match1">
                     95% Match
@@ -435,7 +433,7 @@ footer {
 
             </div>
 
-
+            <!-- SMALL BUSINESS -->
             <div class="card">
 
                 <div class="match" id="match2">
@@ -459,7 +457,7 @@ footer {
 
             </div>
 
-
+            <!-- ENTREPRENEUR -->
             <div class="card">
 
                 <div class="match" id="match3">
@@ -489,7 +487,6 @@ footer {
 
 </section>
 
-
 <!-- ABOUT -->
 <section class="about" id="about">
 
@@ -506,11 +503,9 @@ footer {
 
 </section>
 
-
 <footer>
     © 2026 SchemeAI | Smart India Hackathon Prototype
 </footer>
-
 
 <script>
 
@@ -520,7 +515,7 @@ function findSchemes() {
     const gender = document.getElementById("gender").value;
     const state = document.getElementById("state").value;
     const income = document.getElementById("income").value;
-    const business = document.getElementById("business").value;
+    const business = document.getElementById("business").value.trim();
     const category = document.getElementById("category").value;
 
     if (!age || !gender || !state || !income || !business || !category) {
@@ -534,22 +529,46 @@ function findSchemes() {
     let score2 = 65;
     let score3 = 60;
 
+    /* 
+       WOMEN SCHEME FILTER
+       Female = show
+       Male/Other = hide
+    */
+
+    const womenCard = document.getElementById("womenCard");
+
     if (gender === "Female") {
+
         score1 += 20;
+
+        womenCard.style.display = "block";
+
+    } else {
+
+        womenCard.style.display = "none";
+
     }
+
+    /* INCOME MATCH */
 
     if (income <= 500000) {
         score2 += 15;
     }
 
+    /* AGE MATCH */
+
     if (Number(age) >= 18 && Number(age) <= 50) {
         score3 += 15;
     }
 
+    /* BUSINESS MATCH */
+
     if (business.length >= 3) {
+
         score1 += 5;
         score2 += 5;
         score3 += 5;
+
     }
 
     score1 = Math.min(score1, 99);
@@ -565,8 +584,17 @@ function findSchemes() {
     document.getElementById("match3").innerText =
         score3 + "% Match";
 
-    document.getElementById("result-message").innerHTML =
-        "Based on the information provided, these schemes may match your profile.";
+    if (gender === "Female") {
+
+        document.getElementById("result-message").innerHTML =
+            "Based on the information provided, these schemes may match your profile.";
+
+    } else {
+
+        document.getElementById("result-message").innerHTML =
+            "Women-specific schemes have been filtered out based on your selected gender.";
+
+    }
 
     document.getElementById("profile").style.display = "block";
 
@@ -591,9 +619,10 @@ function showDetails(name) {
 
     alert(
         name +
-        "\\n\\nThis is a prototype recommendation. " +
+        "\n\nThis is a prototype recommendation. " +
         "Final eligibility should be verified using the official scheme guidelines."
     );
+
 }
 
 </script>
