@@ -143,6 +143,12 @@ select {
     border: 1px solid #ccc;
     border-radius: 7px;
     font-size: 16px;
+    background: white;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #d47d18;
 }
 
 .find-btn {
@@ -192,6 +198,10 @@ select {
     box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
+.card.hidden {
+    display: none;
+}
+
 .match {
     display: inline-block;
     background: #dff2df;
@@ -224,6 +234,15 @@ select {
     color: white;
     border-radius: 6px;
     cursor: pointer;
+}
+
+.no-results {
+    display: none;
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+    color: #666;
 }
 
 /* ABOUT */
@@ -315,19 +334,28 @@ footer {
         <h2>Tell Us About Yourself</h2>
 
         <p>
-            Enter your details to discover potentially suitable schemes.
+            Select your details to discover potentially suitable schemes.
         </p>
     </div>
 
     <div class="form-box">
 
+        <!-- AGE -->
         <div class="form-group">
-            <label>Age</label>
-            <input type="number" id="age" placeholder="Example: 32">
+            <label for="age">Age</label>
+
+            <input
+                type="number"
+                id="age"
+                min="18"
+                max="100"
+                placeholder="Example: 32"
+            >
         </div>
 
+        <!-- GENDER -->
         <div class="form-group">
-            <label>Gender</label>
+            <label for="gender">Gender</label>
 
             <select id="gender">
                 <option value="">Select Gender</option>
@@ -337,53 +365,131 @@ footer {
             </select>
         </div>
 
+        <!-- STATE -->
         <div class="form-group">
-            <label>State</label>
+            <label for="state">State</label>
 
             <select id="state">
+
                 <option value="">Select State</option>
-                <option>Tamil Nadu</option>
-                <option>Kerala</option>
-                <option>Karnataka</option>
-                <option>Andhra Pradesh</option>
-                <option>Telangana</option>
+
+                <option value="Tamil Nadu">
+                    Tamil Nadu
+                </option>
+
+                <option value="Kerala">
+                    Kerala
+                </option>
+
+                <option value="Karnataka">
+                    Karnataka
+                </option>
+
+                <option value="Andhra Pradesh">
+                    Andhra Pradesh
+                </option>
+
+                <option value="Telangana">
+                    Telangana
+                </option>
+
             </select>
         </div>
 
+        <!-- INCOME -->
         <div class="form-group">
-            <label>Annual Income</label>
+            <label for="income">Annual Income</label>
 
             <input
                 type="number"
                 id="income"
+                min="0"
                 placeholder="Example: 300000"
             >
         </div>
 
+        <!-- BUSINESS -->
         <div class="form-group">
-            <label>Business Type</label>
+            <label for="business">Business Type</label>
 
-            <input
-                type="text"
-                id="business"
-                placeholder="Example: Tailoring"
-            >
-        </div>
+            <select id="business">
 
-        <div class="form-group">
-            <label>Category</label>
+                <option value="">
+                    Select Business Type
+                </option>
 
-            <select id="category">
-                <option value="">Select Category</option>
-                <option>General</option>
-                <option>SC</option>
-                <option>ST</option>
-                <option>OBC</option>
-                <option>Person with Disability</option>
+                <option value="Tailoring">
+                    Tailoring
+                </option>
+
+                <option value="Food">
+                    Food Business
+                </option>
+
+                <option value="Handicraft">
+                    Handicraft
+                </option>
+
+                <option value="Retail">
+                    Retail Shop
+                </option>
+
+                <option value="Manufacturing">
+                    Manufacturing
+                </option>
+
+                <option value="Agriculture">
+                    Agriculture
+                </option>
+
+                <option value="Services">
+                    Services
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
             </select>
         </div>
 
-        <button class="find-btn" onclick="findSchemes()">
+        <!-- CATEGORY -->
+        <div class="form-group">
+            <label for="category">Category</label>
+
+            <select id="category">
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="General">
+                    General
+                </option>
+
+                <option value="SC">
+                    SC
+                </option>
+
+                <option value="ST">
+                    ST
+                </option>
+
+                <option value="OBC">
+                    OBC
+                </option>
+
+                <option value="Person with Disability">
+                    Person with Disability
+                </option>
+
+            </select>
+        </div>
+
+        <button
+            class="find-btn"
+            onclick="findSchemes()"
+        >
             🔍 Find Suitable Schemes
         </button>
 
@@ -397,90 +503,154 @@ footer {
     <div class="results-container">
 
         <div class="section-title">
-            <h2>Recommended Schemes</h2>
+
+            <h2>
+                Recommended Schemes
+            </h2>
 
             <p id="result-message">
-                Fill your details above and click "Find Suitable Schemes".
+                Select your details above and click
+                "Find Suitable Schemes".
             </p>
+
         </div>
 
-        <div class="profile" id="profile"></div>
+        <!-- PROFILE -->
+        <div
+            class="profile"
+            id="profile"
+        ></div>
 
         <div class="cards">
 
             <!-- WOMEN SCHEME -->
-            <div class="card" id="womenCard">
+            <div
+                class="card"
+                id="womenCard"
+            >
 
-                <div class="match" id="match1">
+                <div
+                    class="match"
+                    id="match1"
+                >
                     95% Match
                 </div>
 
-                <h3>Women Entrepreneur Support</h3>
+                <h3>
+                    Women Entrepreneur Support
+                </h3>
 
                 <p>
                     Support designed for women entrepreneurs
                     starting or expanding small businesses.
                 </p>
 
-                <div class="reason">✓ Gender match</div>
-                <div class="reason">✓ Entrepreneur profile</div>
-                <div class="reason">✓ Business purpose</div>
+                <div class="reason">
+                    ✓ Gender match
+                </div>
 
-                <button class="details"
-                    onclick="showDetails('Women Entrepreneur Support')">
+                <div class="reason">
+                    ✓ Entrepreneur profile
+                </div>
+
+                <div class="reason">
+                    ✓ Business purpose
+                </div>
+
+                <button
+                    class="details"
+                    onclick="showDetails('Women Entrepreneur Support')"
+                >
                     View Details
                 </button>
 
             </div>
 
             <!-- SMALL BUSINESS -->
-            <div class="card">
+            <div
+                class="card"
+                id="smallBusinessCard"
+            >
 
-                <div class="match" id="match2">
+                <div
+                    class="match"
+                    id="match2"
+                >
                     87% Match
                 </div>
 
-                <h3>Small Business Support</h3>
+                <h3>
+                    Small Business Support
+                </h3>
 
                 <p>
                     Potential financial and business support
                     for eligible small entrepreneurs.
                 </p>
 
-                <div class="reason">✓ Business match</div>
-                <div class="reason">✓ Income considered</div>
+                <div class="reason">
+                    ✓ Business match
+                </div>
 
-                <button class="details"
-                    onclick="showDetails('Small Business Support')">
+                <div class="reason">
+                    ✓ Income considered
+                </div>
+
+                <button
+                    class="details"
+                    onclick="showDetails('Small Business Support')"
+                >
                     View Details
                 </button>
 
             </div>
 
             <!-- ENTREPRENEUR -->
-            <div class="card">
+            <div
+                class="card"
+                id="entrepreneurCard"
+            >
 
-                <div class="match" id="match3">
+                <div
+                    class="match"
+                    id="match3"
+                >
                     74% Match
                 </div>
 
-                <h3>Entrepreneur Development</h3>
+                <h3>
+                    Entrepreneur Development
+                </h3>
 
                 <p>
                     Assistance and development support
                     for new entrepreneurs.
                 </p>
 
-                <div class="reason">✓ Age considered</div>
-                <div class="reason">✓ Business match</div>
+                <div class="reason">
+                    ✓ Age considered
+                </div>
 
-                <button class="details"
-                    onclick="showDetails('Entrepreneur Development')">
+                <div class="reason">
+                    ✓ Business match
+                </div>
+
+                <button
+                    class="details"
+                    onclick="showDetails('Entrepreneur Development')"
+                >
                     View Details
                 </button>
 
             </div>
 
+        </div>
+
+        <div
+            class="no-results"
+            id="noResults"
+        >
+            No matching schemes found for the selected profile.
         </div>
 
     </div>
@@ -488,7 +658,10 @@ footer {
 </section>
 
 <!-- ABOUT -->
-<section class="about" id="about">
+<section
+    class="about"
+    id="about"
+>
 
     <div class="section-title">
         <h2>About SchemeAI</h2>
@@ -503,6 +676,7 @@ footer {
 
 </section>
 
+<!-- FOOTER -->
 <footer>
     © 2026 SchemeAI | Smart India Hackathon Prototype
 </footer>
@@ -511,92 +685,154 @@ footer {
 
 function findSchemes() {
 
-    const age = document.getElementById("age").value;
-    const gender = document.getElementById("gender").value;
-    const state = document.getElementById("state").value;
-    const income = document.getElementById("income").value;
-    const business = document.getElementById("business").value.trim();
-    const category = document.getElementById("category").value;
+    const age =
+        document.getElementById("age").value;
 
-    if (!age || !gender || !state || !income || !business || !category) {
+    const gender =
+        document.getElementById("gender").value;
 
-        alert("Please fill all the details before finding schemes.");
+    const state =
+        document.getElementById("state").value;
+
+    const income =
+        document.getElementById("income").value;
+
+    const business =
+        document.getElementById("business").value;
+
+    const category =
+        document.getElementById("category").value;
+
+
+    /* CHECK ALL FIELDS */
+
+    if (
+        !age ||
+        !gender ||
+        !state ||
+        !income ||
+        !business ||
+        !category
+    ) {
+
+        alert(
+            "Please select or enter all details before finding schemes."
+        );
 
         return;
     }
 
-    let score1 = 70;
+
+    /* GET CARDS */
+
+    const womenCard =
+        document.getElementById("womenCard");
+
+    const smallBusinessCard =
+        document.getElementById("smallBusinessCard");
+
+    const entrepreneurCard =
+        document.getElementById("entrepreneurCard");
+
+    const noResults =
+        document.getElementById("noResults");
+
+
+    /* RESET CARDS */
+
+    womenCard.classList.add("hidden");
+    smallBusinessCard.classList.add("hidden");
+    entrepreneurCard.classList.add("hidden");
+
+    noResults.style.display = "none";
+
+
+    /* BASE SCORES */
+
+    let score1 = 65;
     let score2 = 65;
     let score3 = 60;
 
-    /* 
-       WOMEN SCHEME FILTER
-       Female = show
-       Male/Other = hide
-    */
 
-    const womenCard = document.getElementById("womenCard");
+    /* WOMEN SCHEME */
 
     if (gender === "Female") {
 
-        score1 += 20;
+        score1 += 25;
 
-        womenCard.style.display = "block";
+        if (
+            business === "Tailoring" ||
+            business === "Handicraft" ||
+            business === "Food"
+        ) {
+            score1 += 5;
+        }
 
-    } else {
+        score1 = Math.min(score1, 99);
 
-        womenCard.style.display = "none";
+        womenCard.classList.remove("hidden");
 
+        document.getElementById("match1").innerText =
+            score1 + "% Match";
     }
 
-    /* INCOME MATCH */
 
-    if (income <= 500000) {
+    /* SMALL BUSINESS SCHEME */
+
+    if (Number(income) <= 500000) {
+
         score2 += 15;
-    }
-
-    /* AGE MATCH */
-
-    if (Number(age) >= 18 && Number(age) <= 50) {
-        score3 += 15;
-    }
-
-    /* BUSINESS MATCH */
-
-    if (business.length >= 3) {
-
-        score1 += 5;
-        score2 += 5;
-        score3 += 5;
 
     }
 
-    score1 = Math.min(score1, 99);
+    if (
+        business === "Retail" ||
+        business === "Food" ||
+        business === "Tailoring" ||
+        business === "Services"
+    ) {
+
+        score2 += 10;
+
+    }
+
     score2 = Math.min(score2, 99);
-    score3 = Math.min(score3, 99);
 
-    document.getElementById("match1").innerText =
-        score1 + "% Match";
+    smallBusinessCard.classList.remove("hidden");
 
     document.getElementById("match2").innerText =
         score2 + "% Match";
 
-    document.getElementById("match3").innerText =
-        score3 + "% Match";
 
-    if (gender === "Female") {
+    /* ENTREPRENEUR DEVELOPMENT */
 
-        document.getElementById("result-message").innerHTML =
-            "Based on the information provided, these schemes may match your profile.";
+    if (
+        Number(age) >= 18 &&
+        Number(age) <= 50
+    ) {
 
-    } else {
-
-        document.getElementById("result-message").innerHTML =
-            "Women-specific schemes have been filtered out based on your selected gender.";
+        score3 += 20;
 
     }
 
-    document.getElementById("profile").style.display = "block";
+    if (business !== "") {
+
+        score3 += 10;
+
+    }
+
+    score3 = Math.min(score3, 99);
+
+    entrepreneurCard.classList.remove("hidden");
+
+    document.getElementById("match3").innerText =
+        score3 + "% Match";
+
+
+    /* PROFILE */
+
+    document.getElementById("profile").style.display =
+        "block";
 
     document.getElementById("profile").innerHTML =
         "<strong>Your Profile:</strong> " +
@@ -605,13 +841,31 @@ function findSchemes() {
         state + " | ₹" +
         Number(income).toLocaleString("en-IN") +
         " | " +
-        business +
-        " | " +
+        business + " | " +
         category;
+
+
+    /* MESSAGE */
+
+    if (gender === "Female") {
+
+        document.getElementById("result-message").innerText =
+            "Your profile has been analyzed. Women-specific and general schemes are shown below.";
+
+    } else {
+
+        document.getElementById("result-message").innerText =
+            "Your profile has been analyzed. Women-specific schemes are filtered out.";
+
+    }
+
+
+    /* SCROLL TO RESULTS */
 
     document.getElementById("results").scrollIntoView({
         behavior: "smooth"
     });
+
 }
 
 
