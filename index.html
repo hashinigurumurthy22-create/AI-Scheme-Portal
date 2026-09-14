@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SchemeAI</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f4ec;
+    color: #17233c;
+}
+
+/* NAVBAR */
+nav {
+    background: #17233c;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+}
+
+nav a:hover {
+    color: #f2b84b;
+}
+
+/* HERO */
+.hero {
+    min-height: 75vh;
+    padding: 80px 8%;
+    display: flex;
+    align-items: center;
+    background: #eee6d6;
+}
+
+.hero-content {
+    max-width: 750px;
+}
+
+.badge {
+    display: inline-block;
+    background: #f2b84b;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 55px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #d47d18;
+}
+
+.hero p {
+    font-size: 19px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.main-btn {
+    display: inline-block;
+    padding: 15px 25px;
+    background: #17233c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* FORM */
+section {
+    padding: 70px 8%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-title h2 {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: #666;
+}
+
+.form-box {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.find-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #d47d18;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.find-btn:hover {
+    background: #b9670d;
+}
+
+/* RESULTS */
+#results {
+    background: #eee6d6;
+}
+
+.results-container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.profile {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: none;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.match {
+    display: inline-block;
+    background: #dff2df;
+    color: #247224;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.reason {
+    color: #267326;
+    margin: 7px 0;
+}
+
+.details {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border: none;
+    background: #17233c;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ABOUT */
+.about {
+    text-align: center;
+}
+
+.about p {
+    max-width: 700px;
+    margin: auto;
+    color: #555;
+}
+
+/* FOOTER */
+footer {
+    background: #17233c;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+/* MOBILE */
+@media (max-width: 800px) {
+
+    nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav a {
+        margin: 0 8px;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo">🤝 SchemeAI</div>
+
+    <div>
+        <a href="#home">Home</a>
+        <a href="#find">Find Schemes</a>
+        <a href="#results">Results</a>
+        <a href="#about">About</a>
+    </div>
+</nav>
+
+
+<!-- HOME -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="badge">AI-Powered Scheme Discovery</div>
+
+        <h1>
+            Find Government Schemes
+            <span>Made For You</span>
+        </h1>
+
+        <p>
+            Tell us about yourself and your business.
+            SchemeAI helps identify government schemes
+            that may match your profile.
+        </p>
+
+        <a href="#find" class="main-btn">
+            🔍 Find My Schemes
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FIND SCHEMES -->
+<section id="find">
+
+    <div class="section-title">
+        <h2>Tell Us About Yourself</h2>
+
+        <p>
+            Enter your details to discover potentially suitable schemes.
+        </p>
+    </div>
+
+    <div class="form-box">
+
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age" placeholder="Example: 32">
+        </div>
+
+        <div class="form-group">
+            <label>Gender</label>
+
+            <select id="gender">
+                <option value="">Select Gender</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>State</label>
+
+            <select id="state">
+                <option value="">Select State</option>
+                <option>Tamil Nadu</option>
+                <option>Kerala</option>
+                <option>Karnataka</option>
+                <option>Andhra Pradesh</option>
+                <option>Telangana</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Annual Income</label>
+
+            <input
+                type="number"
+                id="income"
+                placeholder="Example: 300000"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Business Type</label>
+
+            <input
+                type="text"
+                id="business"
+                placeholder="Example: Tailoring"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+
+            <select id="category">
+                <option value="">Select Category</option>
+                <option>General</option>
+                <option>SC</option>
+                <option>ST</option>
+                <option>OBC</option>
+                <option>Person with Disability</option>
+            </select>
+        </div>
+
+        <button class="find-btn" onclick="findSchemes()">
+            🔍 Find Suitable Schemes
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- RESULTS -->
+<section id="results">
+
+    <div class="results-container">
+
+        <div class="section-title">
+            <h2>Recommended Schemes</h2>
+
+            <p id="result-message">
+                Fill your details above and click "Find Suitable Schemes".
+            </p>
+        </div>
+
+        <div class="profile" id="profile"></div>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="match" id="match1">
+                    95% Match
+                </div>
+
+                <h3>Women Entrepreneur Support</h3>
+
+                <p>
+                    Support designed for women entrepreneurs
+                    starting or expanding small businesses.
+                </p>
+
+                <div class="reason">✓ Gender match</div>
+                <div class="reason">✓ Entrepreneur profile</div>
+                <div class="reason">✓ Business purpose</div>
+
+                <button class="details"
+                    onclick="showDetails('Women Entrepreneur Support')">
+                    View Details
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="match" id="match2">
+                    87% Match
+                </div>
+
+                <h3>Small Business Support</h3>
+
+                <p>
+                    Potential financial and business support
+                    for eligible small entrepreneurs.
+                </p>
+
+                <div class="reason">✓ Business match</div>
+                <div class="reason">✓ Income considered</div>
+
+                <button class="details"
+                    onclick="showDetails('Small Business Support')">
+                    View Details
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="match" id="match3">
+                    74% Match
+                </div>
+
+                <h3>Entrepreneur Development</h3>
+
+                <p>
+                    Assistance and development support
+                    for new entrepreneurs.
+                </p>
+
+                <div class="reason">✓ Age considered</div>
+                <div class="reason">✓ Business match</div>
+
+                <button class="details"
+                    onclick="showDetails('Entrepreneur Development')">
+                    View Details
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+    <div class="section-title">
+        <h2>About SchemeAI</h2>
+    </div>
+
+    <p>
+        SchemeAI is an AI-driven prototype that helps
+        marginalized and first-time entrepreneurs discover
+        potentially relevant government schemes based on
+        their profile and business needs.
+    </p>
+
+</section>
+
+
+<footer>
+    © 2026 SchemeAI | Smart India Hackathon Prototype
+</footer>
+
+
+<script>
+
+function findSchemes() {
+
+    const age = document.getElementById("age").value;
+    const gender = document.getElementById("gender").value;
+    const state = document.getElementById("state").value;
+    const income = document.getElementById("income").value;
+    const business = document.getElementById("business").value;
+    const category = document.getElementById("category").value;
+
+    if (!age || !gender || !state || !income || !business || !category) {
+
+        alert("Please fill all the details before finding schemes.");
+
+        return;
+    }
+
+    let score1 = 70;
+    let score2 = 65;
+    let score3 = 60;
+
+    if (gender === "Female") {
+        score1 += 20;
+    }
+
+    if (income <= 500000) {
+        score2 += 15;
+    }
+
+    if (Number(age) >= 18 && Number(age) <= 50) {
+        score3 += 15;
+    }
+
+    if (business.length >= 3) {
+        score1 += 5;
+        score2 += 5;
+        score3 += 5;
+    }
+
+    score1 = Math.min(score1, 99);
+    score2 = Math.min(score2, 99);
+    score3 = Math.min(score3, 99);
+
+    document.getElementById("match1").innerText =
+        score1 + "% Match";
+
+    document.getElementById("match2").innerText =
+        score2 + "% Match";
+
+    document.getElementById("match3").innerText =
+        score3 + "% Match";
+
+    document.getElementById("result-message").innerHTML =
+        "Based on the information provided, these schemes may match your profile.";
+
+    document.getElementById("profile").style.display = "block";
+
+    document.getElementById("profile").innerHTML =
+        "<strong>Your Profile:</strong> " +
+        age + " years | " +
+        gender + " | " +
+        state + " | ₹" +
+        Number(income).toLocaleString("en-IN") +
+        " | " +
+        business +
+        " | " +
+        category;
+
+    document.getElementById("results").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+function showDetails(name) {
+
+    alert(
+        name +
+        "\\n\\nThis is a prototype recommendation. " +
+        "Final eligibility should be verified using the official scheme guidelines."
+    );
+}
+
+</script>
+
+</body>
+</html>
