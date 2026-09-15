@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SchemeAI | SIH26092</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#182033;
+    line-height:1.6;
+}
+
+header{
+    background:linear-gradient(135deg,#243b80,#526de4);
+    color:white;
+    padding:25px 18px;
+}
+
+.nav{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:bold;
+}
+
+.lang{
+    background:white;
+    color:#243b80;
+    border:none;
+    padding:8px 13px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.hero{
+    max-width:1100px;
+    margin:35px auto 10px;
+    padding:0 18px;
+}
+
+.hero h1{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    max-width:750px;
+    opacity:.92;
+}
+
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:0 18px;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:22px;
+    box-shadow:0 5px 22px rgba(0,0,0,.07);
+}
+
+.card h2{
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+input,
+select{
+    width:100%;
+    padding:13px;
+    border:1px solid #ccd3e0;
+    border-radius:9px;
+    font-size:15px;
+    background:white;
+}
+
+button{
+    cursor:pointer;
+    border:none;
+    border-radius:9px;
+    padding:13px 18px;
+    font-weight:bold;
+    font-size:15px;
+}
+
+.primary{
+    background:#405bd6;
+    color:white;
+    width:100%;
+    margin-top:20px;
+}
+
+.secondary{
+    background:#edf1ff;
+    color:#3048b0;
+}
+
+.voice{
+    margin-top:10px;
+}
+
+.result{
+    display:none;
+}
+
+.best{
+    border:2px solid #405bd6;
+    background:#f8f9ff;
+    padding:22px;
+    border-radius:15px;
+}
+
+.score{
+    display:inline-block;
+    background:#e7f8ee;
+    color:#14763b;
+    padding:7px 14px;
+    border-radius:20px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.badge{
+    display:inline-block;
+    background:#edf1ff;
+    color:#3349a5;
+    padding:5px 10px;
+    border-radius:15px;
+    font-size:13px;
+    margin:3px;
+}
+
+.reason{
+    margin-top:15px;
+}
+
+.reason li{
+    margin-left:22px;
+    margin-bottom:7px;
+}
+
+.info{
+    background:#f1f5ff;
+    border-left:5px solid #405bd6;
+    padding:16px;
+    border-radius:8px;
+    margin-top:15px;
+}
+
+.scheme-card{
+    border:1px solid #e0e5ee;
+    padding:20px;
+    border-radius:14px;
+    margin-top:14px;
+}
+
+.scheme-card h3{
+    margin-bottom:8px;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:15px;
+}
+
+.feature{
+    background:#f8f9fc;
+    padding:13px;
+    border-radius:9px;
+}
+
+.partner{
+    border:1px solid #dfe4ed;
+    border-radius:12px;
+    padding:18px;
+    margin-top:12px;
+    background:#fafbff;
+}
+
+.partner-status{
+    color:#14763c;
+    font-weight:bold;
+}
+
+.big-number{
+    font-size:28px;
+    font-weight:bold;
+    color:#304bb6;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #e5e8ef;
+    text-align:left;
+}
+
+th{
+    background:#f2f4f9;
+}
+
+.small{
+    font-size:13px;
+    color:#697386;
+}
+
+footer{
+    background:#17213c;
+    color:white;
+    text-align:center;
+    padding:30px 18px;
+    margin-top:30px;
+}
+
+a{
+    color:#304bb6;
+    font-weight:bold;
+}
+
+@media(max-width:700px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    table{
+        font-size:13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">
+🤖 SchemeAI
+</div>
+
+<button class="lang" onclick="toggleLanguage()">
+தமிழ் / English
+</button>
+
+</div>
+
+<div class="hero">
+
+<h1 id="heroTitle">
+Smart Scheme Matching
+</h1>
+
+<p id="heroText">
+An explainable digital platform that helps eligible beneficiaries
+identify suitable concessional financial schemes and channel partners.
+</p>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- PROFILE -->
+
+<div class="card">
+
+<h2 id="profileTitle">
+👤 Applicant Profile
+</h2>
+
+<div class="grid">
+
+<div>
+<label>Age</label>
+<input id="age" type="number" placeholder="Example: 25">
+</div>
+
+<div>
+<label>Gender</label>
+
+<select id="gender">
+
+<option value="">Select</option>
+<option>Female</option>
+<option>Male</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Social Category</label>
+
+<select id="category">
+
+<option value="">Select</option>
+<option>SC</option>
+<option>ST</option>
+<option>OBC</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Annual Family Income (₹)</label>
+
+<input
+id="income"
+type="number"
+placeholder="Example: 300000">
+
+</div>
+
+
+<div>
+
+<label>Purpose</label>
+
+<select id="purpose">
+
+<option value="">Select</option>
+<option value="business">
+Business / Self Employment
+</option>
+
+<option value="education">
+Education
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Project / Course Cost (₹)</label>
+
+<input
+id="cost"
+type="number"
+placeholder="Example: 100000">
+
+</div>
+
+
+<div>
+
+<label>Business / Activity</label>
+
+<input
+id="business"
+placeholder="Example: Home Bakery">
+
+</div>
+
+
+<div>
+
+<label>State</label>
+
+<select id="state">
+
+<option>Tamil Nadu</option>
+<option>Kerala</option>
+<option>Karnataka</option>
+<option>Andhra Pradesh</option>
+<option>Telangana</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<button class="secondary voice" onclick="voiceInput()">
+
+🎤 Speak Activity
+
+</button>
+
+
+<p id="voiceStatus" class="small"></p>
+
+
+<button class="primary" onclick="matchSchemes()">
+
+🔍 Find Suitable Schemes
+
+</button>
+
+</div>
+
+
+
+<!-- RESULTS -->
+
+<div class="card result" id="results">
+
+<h2>
+🎯 Most Suitable Scheme
+</h2>
+
+<div id="bestResult"></div>
+
+</div>
+
+
+
+<!-- OTHER RESULTS -->
+
+<div class="card result" id="otherResults">
+
+<h2>
+📋 Other Scheme Results
+</h2>
+
+<div id="otherList"></div>
+
+</div>
+
+
+
+<!-- EMI -->
+
+<div class="card">
+
+<h2>
+💰 Financial Calculator
+</h2>
+
+<p class="small">
+Enter the amount, interest rate and repayment period.
+This is an indicative calculation only.
+</p>
+
+<br>
+
+<label>Loan Amount (₹)</label>
+
+<input
+id="loan"
+type="number"
+placeholder="100000">
+
+<label>Annual Interest Rate (%)</label>
+
+<input
+id="rate"
+type="number"
+placeholder="6.5">
+
+<label>Repayment Period (Years)</label>
+
+<input
+id="years"
+type="number"
+placeholder="3">
+
+<button class="primary" onclick="calculateEMI()">
+
+Calculate EMI
+
+</button>
+
+<div class="info" id="emiResult">
+
+Enter loan details and calculate.
+
+</div>
+
+</div>
+
+
+
+<!-- PARTNER -->
+
+<div class="card">
+
+<h2>
+🏦 Channel Partner Router
+</h2>
+
+<p>
+Applications for schemes are generally routed through
+authorized channel partners, banks or implementing agencies.
+</p>
+
+<div class="partner">
+
+<h3>
+📍 Tamil Nadu — Demo Routing
+</h3>
+
+<p>
+State Channelizing Agency / authorized banking channel
+</p>
+
+<p class="partner-status">
+● Category-based route
+</p>
+
+<p class="small">
+This is a prototype routing representation.
+Live partner availability should be verified from
+authorized systems.
+</p>
+
+</div>
+
+<div class="partner">
+
+<h3>
+🏦 Banking / Financial Partner
+</h3>
+
+<p>
+Public Sector Bank / RRB / eligible Channel Partner
+</p>
+
+<p class="partner-status">
+● Category-based routing
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- SCHEME TABLE -->
+
+<div class="card">
+
+<h2>
+📚 Verified Scheme Reference
+</h2>
+
+<table>
+
+<tr>
+<th>Scheme</th>
+<th>Target</th>
+<th>Key Limit</th>
+<th>Interest</th>
+</tr>
+
+<tr>
+<td>NSFDC Micro Finance Scheme</td>
+<td>SC</td>
+<td>Project up to ₹1.40 lakh</td>
+<td>6.5%</td>
+</tr>
+
+<tr>
+<td>NSFDC Term Loan</td>
+<td>SC</td>
+<td>Project ₹1.40–50 lakh</td>
+<td>8%</td>
+</tr>
+
+<tr>
+<td>NSTFDC Adivasi Mahila Sashaktikaran</td>
+<td>ST Women</td>
+<td>Project up to ₹2 lakh</td>
+<td>4%</td>
+</tr>
+
+<tr>
+<td>PMMY</td>
+<td>Micro enterprises</td>
+<td>Up to ₹20 lakh*</td>
+<td>Varies</td>
+</tr>
+
+<tr>
+<td>PMEGP</td>
+<td>New micro enterprises</td>
+<td>As per current guidelines</td>
+<td>Bank-linked</td>
+</tr>
+
+</table>
+
+<p class="small">
+
+*PMMY Tarun Plus has additional eligibility conditions.
+
+</p>
+
+</div>
+
+
+
+<!-- HOW IT WORKS -->
+
+<div class="card">
+
+<h2>
+⚙️ How SchemeAI Works
+</h2>
+
+<div class="features">
+
+<div class="feature">
+<strong>1️⃣ Profile</strong>
+<br>
+Collect applicant details.
+</div>
+
+<div class="feature">
+<strong>2️⃣ Rule Engine</strong>
+<br>
+Check published eligibility rules.
+</div>
+
+<div class="feature">
+<strong>3️⃣ Ranking</strong>
+<br>
+Rank matching schemes.
+</div>
+
+<div class="feature">
+<strong>4️⃣ Explanation</strong>
+<br>
+Show why a scheme matched.
+</div>
+
+<div class="feature">
+<strong>5️⃣ Calculator</strong>
+<br>
+Estimate repayment.
+</div>
+
+<div class="feature">
+<strong>6️⃣ Routing</strong>
+<br>
+Identify the appropriate partner route.
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- AI FUTURE -->
+
+<div class="card">
+
+<h2>
+🤖 AI Scheme Update Pipeline
+</h2>
+
+<div class="info">
+
+<strong>
+Official Source → AI Extraction → Verification → Publish
+</strong>
+
+<br><br>
+
+SchemeAI is designed so that new scheme information
+can be collected from selected official government sources,
+structured by AI, reviewed by an administrator and then
+published to the scheme database.
+
+<br><br>
+
+<span class="small">
+
+The current website is a prototype. Live automatic
+source monitoring and database publishing require a
+backend service.
+
+</span>
+
+</div>
+
+</div>
+
+
+
+<!-- SOURCES -->
+
+<div class="card">
+
+<h2>
+🔗 Official Information Sources
+</h2>
+
+<p>
+<a href="https://nsfdc.nic.in/" target="_blank">
+NSFDC
+</a>
+</p>
+
+<br>
+
+<p>
+<a href="https://www.nbcfdc.gov.in/" target="_blank">
+NBCFDC
+</a>
+</p>
+
+<br>
+
+<p>
+<a href="https://nstfdc.tribal.gov.in/" target="_blank">
+NSTFDC
+</a>
+</p>
+
+<br>
+
+<p>
+<a href="https://www.pmegp.msme.gov.in/" target="_blank">
+PMEGP
+</a>
+</p>
+
+<br>
+
+<p>
+<a href="https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy"
+target="_blank">
+PMMY — Department of Financial Services
+</a>
+</p>
+
+</div>
+
+
+
+<!-- DISCLAIMER -->
+
+<div class="card">
+
+<h2>
+⚠️ Important
+</h2>
+
+<p>
+
+SchemeAI provides a <strong>preliminary matching result</strong>.
+It does not guarantee loan sanction or final eligibility.
+
+Final eligibility, interest rate, documentation,
+partner availability and sanction are determined by
+the concerned Government authority, implementing agency
+or lending institution.
+
+</p>
+
+</div>
+
+</div>
+
+
+<footer>
+
+<strong>SchemeAI</strong>
+
+<br>
+
+SIH26092 — AI-Driven Scheme Matching for
+Marginalized Entrepreneurs
+
+<br><br>
+
+Prototype for Smart Automation
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+SCHEME DATABASE
+===================================================== */
+
+const schemes = [
+
+{
+name:"NSFDC Micro Finance Scheme",
+target:"SC",
+purpose:"business",
+maxProject:140000,
+maxLoan:125000,
+interest:6.5,
+years:3,
+moratorium:"3 months",
+reason:"For eligible small income-generating business activities.",
+source:"https://nsfdc.nic.in/faqs"
+},
+
+{
+name:"NSFDC Term Loan",
+target:"SC",
+purpose:"business",
+minProject:140001,
+maxProject:5000000,
+maxLoan:4500000,
+interest:8,
+years:7,
+moratorium:"6 months",
+reason:"For eligible larger income-generating projects.",
+source:"https://nsfdc.nic.in/faqs"
+},
+
+{
+name:"NSFDC Educational Loan Scheme",
+target:"SC",
+purpose:"education",
+maxProject:4000000,
+maxLoan:4000000,
+interest:6.5,
+years:10,
+moratorium:"Course duration + 1 year",
+reason:"For eligible professional or technical higher education.",
+source:"https://nsfdc.nic.in/faqs"
+},
+
+{
+name:"NSTFDC Adivasi Mahila Sashaktikaran Yojana",
+target:"ST",
+gender:"Female",
+purpose:"business",
+maxProject:200000,
+maxLoan:180000,
+interest:4,
+years:4,
+moratorium:"As applicable",
+reason:"Economic-development financing for eligible ST women.",
+source:"https://nstfdc.tribal.gov.in/"
+},
+
+{
+name:"Pradhan Mantri MUDRA Yojana — Shishu",
+target:"ANY",
+purpose:"business",
+maxProject:50000,
+maxLoan:50000,
+interest:null,
+years:null,
+moratorium:"As per lender",
+reason:"Micro enterprise credit up to ₹50,000.",
+source:"https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy"
+},
+
+{
+name:"Pradhan Mantri MUDRA Yojana — Kishor",
+target:"ANY",
+purpose:"business",
+minProject:50001,
+maxProject:500000,
+maxLoan:500000,
+interest:null,
+years:null,
+moratorium:"As per lender",
+reason:"Micro enterprise credit above ₹50,000 and up to ₹5 lakh.",
+source:"https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy"
+},
+
+{
+name:"Pradhan Mantri MUDRA Yojana — Tarun",
+target:"ANY",
+purpose:"business",
+minProject:500001,
+maxProject:1000000,
+maxLoan:1000000,
+interest:null,
+years:null,
+moratorium:"As per lender",
+reason:"Micro enterprise credit above ₹5 lakh and up to ₹10 lakh.",
+source:"https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy"
+},
+
+{
+name:"Pradhan Mantri MUDRA Yojana — Tarun Plus",
+target:"ANY",
+purpose:"business",
+minProject:1000001,
+maxProject:2000000,
+maxLoan:2000000,
+interest:null,
+years:null,
+moratorium:"As per lender",
+reason:"For eligible entrepreneurs who have successfully repaid a previous Tarun loan.",
+source:"https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy"
+},
+
+{
+name:"PMEGP",
+target:"ANY",
+purpose:"business",
+minAge:18,
+maxProject:2500000,
+maxLoan:2500000,
+interest:null,
+years:null,
+moratorium:"As per bank",
+reason:"For eligible new micro-enterprises under current PMEGP guidelines.",
+source:"https://www.pmegp.msme.gov.in/"
+}
+
+];
+
+
+/* =====================================================
+MATCHING ENGINE
+===================================================== */
+
+function matchSchemes(){
+
+const age =
+Number(document.getElementById("age").value);
+
+const gender =
+document.getElementById("gender").value;
+
+const category =
+document.getElementById("category").value;
+
+const income =
+Number(document.getElementById("income").value);
+
+const purpose =
+document.getElementById("purpose").value;
+
+const cost =
+Number(document.getElementById("cost").value);
+
+const business =
+document.getElementById("business").value;
+
+if(
+!age ||
+!income ||
+!purpose ||
+!cost ||
+!category
+){
+
+alert("Please fill all important fields.");
+
+return;
+
+}
+
+
+let results = schemes.map(scheme=>{
+
+let score = 0;
+
+let reasons = [];
+
+let eligible = true;
+
+
+/* AGE */
+
+if(scheme.minAge){
+
+if(age >= scheme.minAge){
+
+score += 15;
+
+reasons.push(
+"✓ Age requirement is satisfied."
+);
+
+}else{
+
+eligible=false;
+
+reasons.push(
+"✗ Applicant is below the minimum age."
+);
+
+}
+
+}else{
+
+score += 10;
+
+}
+
+
+/* CATEGORY */
+
+if(scheme.target==="ANY"){
+
+score += 20;
+
+reasons.push(
+"✓ Scheme is open to multiple social categories."
+);
+
+}
+
+else if(category===scheme.target){
+
+score += 30;
+
+reasons.push(
+"✓ Social category matches the target group."
+);
+
+}
+
+else{
+
+eligible=false;
+
+reasons.push(
+"✗ Social category does not match the target group."
+);
+
+}
+
+
+/* GENDER */
+
+if(scheme.gender){
+
+if(gender===scheme.gender){
+
+score += 15;
+
+reasons.push(
+"✓ Gender requirement is satisfied."
+);
+
+}else{
+
+eligible=false;
+
+reasons.push(
+"✗ This scheme is specifically for women."
+);
+
+}
+
+}
+
+
+/* PURPOSE */
+
+if(purpose===scheme.purpose){
+
+score += 20;
+
+reasons.push(
+"✓ Purpose matches the scheme."
+);
+
+}else{
+
+eligible=false;
+
+reasons.push(
+"✗ Purpose does not match."
+);
+
+}
+
+
+/* PROJECT COST */
+
+if(
+scheme.minProject &&
+cost < scheme.minProject
+){
+
+eligible=false;
+
+reasons.push(
+"✗ Project cost is below the scheme range."
+);
+
+}
+
+else if(
+scheme.maxProject &&
+cost > scheme.maxProject
+){
+
+eligible=false;
+
+reasons.push(
+"✗ Project cost exceeds the scheme range."
+);
+
+}
+
+else{
+
+score += 20;
+
+reasons.push(
+"✓ Project cost fits the scheme range."
+);
+
+}
+
+
+/* BUSINESS */
+
+if(business){
+
+reasons.push(
+"✓ Activity recorded: " + business
+);
+
+}
+
+
+/* INCOME */
+
+if(
+category==="SC" &&
+income<=500000
+){
+
+score += 10;
+
+reasons.push(
+"✓ Income information recorded for SC matching."
+);
+
+}
+
+
+return{
+
+...scheme,
+score,
+eligible,
+reasons
+
+};
+
+});
+
+
+/* SORT */
+
+results.sort((a,b)=>{
+
+if(a.eligible!==b.eligible){
+
+return a.eligible ? -1 : 1;
+
+}
+
+return b.score-a.score;
+
+});
+
+
+const eligible =
+results.filter(x=>x.eligible);
+
+const notEligible =
+results.filter(x=>!x.eligible);
+
+
+/* RESULTS */
+
+document.getElementById("results")
+.style.display="block";
+
+document.getElementById("otherResults")
+.style.display="block";
+
+
+/* BEST */
+
+if(eligible.length){
+
+const best=eligible[0];
+
+document.getElementById("bestResult").innerHTML=`
+
+<div class="best">
+
+<h2>
+⭐ ${best.name}
+</h2>
+
+<div class="score">
+${best.score}% Profile Match
+</div>
+
+<div>
+
+<span class="badge">
+Target: ${best.target}
+</span>
+
+<span class="badge">
+Purpose: ${best.purpose}
+</span>
+
+</div>
+
+<div class="features">
+
+<div class="feature">
+
+<strong>Maximum Loan</strong>
+
+<br>
+
+₹${formatMoney(best.maxLoan)}
+
+</div>
+
+
+<div class="feature">
+
+<strong>Interest</strong>
+
+<br>
+
+${
+best.interest
+? best.interest+"% p.a."
+: "As per lender"
+}
+
+</div>
+
+
+<div class="feature">
+
+<strong>Repayment</strong>
+
+<br>
+
+${
+best.years
+? best.years+" years"
+: "As per lender"
+}
+
+</div>
+
+</div>
+
+
+<div class="info">
+
+<strong>Why this scheme?</strong>
+
+<ul class="reason">
+
+${
+best.reasons
+.map(x=>`<li>${x}</li>`)
+.join("")
+}
+
+</ul>
+
+</div>
+
+
+<p style="margin-top:15px">
+
+<strong>Moratorium:</strong>
+${best.moratorium}
+
+</p>
+
+
+<p style="margin-top:12px">
+
+<a href="${best.source}" target="_blank">
+
+🔗 View official information
+
+</a>
+
+</p>
+
+</div>
+
+`;
+
+}else{
+
+document.getElementById("bestResult").innerHTML=`
+
+<div class="info">
+
+<strong>
+No exact profile match was found.
+</strong>
+
+<br><br>
+
+Try changing the project cost, purpose or profile.
+Final eligibility must be verified with the official authority.
+
+</div>
+
+`;
+
+}
+
+
+/* OTHER RESULTS */
+
+let html="";
+
+notEligible
+.slice(0,6)
+.forEach(scheme=>{
+
+html +=`
+
+<div class="scheme-card">
+
+<h3>
+${scheme.name}
+</h3>
+
+<span class="badge">
+${scheme.score}% Profile Match
+</span>
+
+<ul class="reason">
+
+${
+scheme.reasons
+.slice(0,4)
+.map(x=>`<li>${x}</li>`)
+.join("")
+}
+
+</ul>
+
+<p style="margin-top:10px">
+
+<a href="${scheme.source}" target="_blank">
+
+Official source
+
+</a>
+
+</p>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("otherList")
+.innerHTML=html;
+
+
+document.getElementById("results")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+
+/* =====================================================
+MONEY FORMAT
+===================================================== */
+
+function formatMoney(value){
+
+if(!value){
+
+return "—";
+
+}
+
+return Number(value)
+.toLocaleString("en-IN");
+
+}
+
+
+
+/* =====================================================
+EMI CALCULATOR
+===================================================== */
+
+function calculateEMI(){
+
+const P =
+Number(document.getElementById("loan").value);
+
+const annual =
+Number(document.getElementById("rate").value);
+
+const years =
+Number(document.getElementById("years").value);
+
+
+if(!P || !annual || !years){
+
+alert("Please enter all loan details.");
+
+return;
+
+}
+
+
+const r =
+annual/12/100;
+
+const n =
+years*12;
+
+
+const emi =
+(P*r*Math.pow(1+r,n))/
+(Math.pow(1+r,n)-1);
+
+
+const total =
+emi*n;
+
+const interest =
+total-P;
+
+
+document.getElementById("emiResult")
+.innerHTML=`
+
+<strong>
+Estimated Monthly EMI
+</strong>
+
+<br><br>
+
+<div class="big-number">
+
+₹${Math.round(emi)
+.toLocaleString("en-IN")}
+
+</div>
+
+<br>
+
+Total repayment:
+
+<strong>
+₹${Math.round(total)
+.toLocaleString("en-IN")}
+</strong>
+
+<br>
+
+Estimated interest:
+
+<strong>
+₹${Math.round(interest)
+.toLocaleString("en-IN")}
+</strong>
+
+<br><br>
+
+<span class="small">
+
+This is an illustrative EMI calculation.
+Actual repayment can differ because of
+scheme-specific terms, moratoriums,
+lender charges and repayment structure.
+
+</span>
+
+`;
+
+}
+
+
+
+/* =====================================================
+VOICE INPUT
+===================================================== */
+
+function voiceInput(){
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+
+if(!SpeechRecognition){
+
+alert(
+"Voice input is not supported in this browser. Please use Chrome or Edge."
+);
+
+return;
+
+}
+
+
+const recognition =
+new SpeechRecognition();
+
+
+recognition.lang="en-IN";
+
+recognition.interimResults=false;
+
+recognition.maxAlternatives=1;
+
+
+document.getElementById("voiceStatus")
+.innerText="🎤 Listening... Speak your business/activity.";
+
+
+recognition.start();
+
+
+recognition.onresult=function(event){
+
+const text =
+event.results[0][0].transcript;
+
+
+document.getElementById("business")
+.value=text;
+
+
+document.getElementById("voiceStatus")
+.innerText=
+"✅ Voice captured: " + text;
+
+};
+
+
+recognition.onerror=function(){
+
+document.getElementById("voiceStatus")
+.innerText=
+"❌ Voice input failed. Please try again.";
+
+};
+
+}
+
+
+
+/* =====================================================
+LANGUAGE TOGGLE
+===================================================== */
+
+let tamil=false;
+
+function toggleLanguage(){
+
+tamil=!tamil;
+
+
+if(tamil){
+
+document.getElementById("heroTitle")
+.innerText=
+"ஸ்மார்ட் அரசு திட்ட பொருத்தம்";
+
+
+document.getElementById("heroText")
+.innerText=
+"தகுதியான பயனாளிகளுக்கு பொருத்தமான அரசு நிதித் திட்டங்களை கண்டறிய உதவும் தளம்.";
+
+
+document.getElementById("profileTitle")
+.innerText=
+"👤 விண்ணப்பதாரர் விவரங்கள்";
+
+}else{
+
+document.getElementById("heroTitle")
+.innerText=
+"Smart Scheme Matching";
+
+
+document.getElementById("heroText")
+.innerText=
+"An explainable digital platform that helps eligible beneficiaries identify suitable concessional financial schemes and channel partners.";
+
+
+document.getElementById("profileTitle")
+.innerText=
+"👤 Applicant Profile";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
