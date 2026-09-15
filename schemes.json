@@ -1,0 +1,95 @@
+[
+  {
+    "name": "NSFDC Micro Finance Scheme",
+    "target": "SC",
+    "purpose": "business",
+    "maxProject": 140000,
+    "maxLoan": 125000,
+    "interest": 6.5,
+    "years": 3,
+    "source": "https://nsfdc.nic.in/faqs",
+    "reason": "For eligible small income-generating business activities."
+  },
+  {
+    "name": "NSFDC Term Loan",
+    "target": "SC",
+    "purpose": "business",
+    "minProject": 140001,
+    "maxProject": 5000000,
+    "maxLoan": 4500000,
+    "interest": 8,
+    "years": 7,
+    "source": "https://nsfdc.nic.in/faqs",
+    "reason": "For eligible larger income-generating projects."
+  },
+  {
+    "name": "NSFDC Educational Loan Scheme",
+    "target": "SC",
+    "purpose": "education",
+    "maxProject": 4000000,
+    "maxLoan": 4000000,
+    "interest": 6.5,
+    "years": 10,
+    "source": "https://nsfdc.nic.in/faqs",
+    "reason": "For eligible professional or technical higher education."
+  },
+  {
+    "name": "NSTFDC Adivasi Mahila Sashaktikaran Yojana",
+    "target": "ST",
+    "gender": "Female",
+    "purpose": "business",
+    "maxProject": 200000,
+    "maxLoan": 180000,
+    "interest": 4,
+    "years": 4,
+    "source": "https://nstfdc.tribal.gov.in/",
+    "reason": "Economic-development financing for eligible ST women."
+  },
+  {
+    "name": "PMMY Shishu",
+    "target": "ANY",
+    "purpose": "business",
+    "maxProject": 50000,
+    "maxLoan": 50000,
+    "interest": null,
+    "years": null,
+    "source": "https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy",
+    "reason": "Micro enterprise credit up to Rs.50,000."
+  },
+  {
+    "name": "PMMY Kishor",
+    "target": "ANY",
+    "purpose": "business",
+    "minProject": 50001,
+    "maxProject": 500000,
+    "maxLoan": 500000,
+    "interest": null,
+    "years": null,
+    "source": "https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy",
+    "reason": "Micro enterprise credit above Rs.50,000 and up to Rs.5 lakh."
+  },
+  {
+    "name": "PMMY Tarun",
+    "target": "ANY",
+    "purpose": "business",
+    "minProject": 500001,
+    "maxProject": 1000000,
+    "maxLoan": 1000000,
+    "interest": null,
+    "years": null,
+    "source": "https://financialservices.gov.in/pradhan-mantri-mudra-yojana-pmmy",
+    "reason": "Micro enterprise credit above Rs.5 lakh and up to Rs.10 lakh."
+  },
+  {
+    "name": "PMEGP",
+    "target": "ANY",
+    "purpose": "business",
+    "minAge": 18,
+    "maxProject": 2500000,
+    "maxLoan": 2500000,
+    "interest": null,
+    "years": null,
+    "source": "https://www.pmegp.msme.gov.in/",
+    "reason": "For eligible new micro-enterprises under PMEGP guidelines."
+  }
+]
